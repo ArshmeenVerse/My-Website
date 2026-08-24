@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arshmeen — AI & Web Developer | IIT Madras</title>
+  <meta name="description"
+    content="Portfolio of Arshmeen — AI/ML & Web Developer pursuing BS in Data Science & Applications at IIT Madras. Explore projects, experience, and achievements.">
+  <meta name="keywords"
+    content="Arshmeen, Web Developer, Data Science, IIT Madras, AI ML, Python, Flask, Portfolio, Frontend, Full Stack">
+  <meta name="author" content="Arshmeen">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Arshmeen — AI & Web Developer | IIT Madras">
+  <meta property="og:description"
+    content="BS in Data Science & Applications @ IIT Madras • Top 20 Mint Hackathon • Full-Stack Python & Web Developer.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Instrument Serif + Plus Jakarta Sans + Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome Icons for crisp UI icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Custom Cursor Elements -->
+  <div class="custom-cursor" id="customCursor"></div>
+  <div class="custom-cursor-follower" id="cursorFollower"></div>
+
+  <!-- Ambient Sound / Lo-Fi Player audio container -->
+  <audio id="lofiAudio" loop preload="none">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"
+      type="audio/mpeg">
+  </audio>
+
+  <!-- Interactive Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Photo Manager Modal -->
+  <div class="modal-overlay" id="photoModal">
+    <div class="modal-card bento-card">
+      <div class="modal-header">
+        <div class="pill-badge yellow-pill">
+          <i class="fa-solid fa-camera"></i> Customize Photo
+        </div>
+        <button class="icon-btn close-modal-btn" id="closePhotoModal" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-description">
+          Upload your personal photo to display on your portfolio or choose from curated aesthetic avatars. Your choice
+          is automatically saved locally!
+        </p>
+
+        <div class="photo-preview-box">
+          <div class="photo-frame-preview" id="modalPhotoPreview">
+            <img src="assets/profile.png" alt="Arshmeen Preview" id="modalPreviewImg">
+          </div>
+          <div class="photo-upload-actions">
+            <label for="photoFileInput" class="bento-btn primary-btn upload-btn">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Upload From Device
+            </label>
+            <input type="file" id="photoFileInput" accept="image/*" style="display: none;">
+            <button class="bento-btn outline-btn" id="resetDefaultPhoto">
+              <i class="fa-solid fa-rotate-left"></i> Reset to Default
+            </button>
+          </div>
+        </div>
+
+        <div class="avatar-presets">
+          <span class="preset-title">Or pick a profile style:</span>
+          <div class="preset-grid">
+            <button class="preset-option active" data-src="assets/profile.png">
+              <div class="avatar-thumb avatar-1"></div>
+              <span>Real Portrait</span>
+            </button>
+            <button class="preset-option" data-src="avatar-yellow">
+              <div class="avatar-thumb avatar-2"></div>
+              <span>Canary Pop</span>
+            </button>
+            <button class="preset-option" data-src="avatar-minimal">
+              <div class="avatar-thumb avatar-3"></div>
+              <span>Minimal Mono</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Details Modal -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal-card bento-card project-modal-card">
+      <div class="modal-header">
+        <div class="pill-badge purple-pill" id="modalProjectTag">
+          Full-Stack Web App
+        </div>
+        <button class="icon-btn close-modal-btn" id="closeProjectModal" aria-label="Close project modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modalProjectContent">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Floating Navigation Bar -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand-pill">
+        <span class="starburst-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
+            <circle cx="12" cy="10" r="2.5" fill="#FAF7BF" />
+          </svg>
+        </span>
+        <span class="brand-name">ARSHMEEN</span>
+      </a>
+
+      <nav class="nav-links-pill" id="mainNav">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#work" class="nav-link">Work</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://drive.google.com/file/d/1rEjmG0QCQrCl7JcQ0-jf7Om7HO7hiRHk/view?usp=sharing" target="_blank"
+          rel="noopener noreferrer" class="nav-resume-btn" title="View & Download Resume">
+          <i class="fa-solid fa-file-arrow-down"></i>
+          <span>Resume</span>
+        </a>
+        <a href="#contact" class="nav-btn-pill">
+          <span>Let's Talk</span>
+          <span class="btn-arrow-circle"><i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" class="mobile-nav-link">About</a>
+      <a href="#work" class="mobile-nav-link">Work</a>
+      <a href="#experience" class="mobile-nav-link">Experience</a>
+      <a href="#education" class="mobile-nav-link">Education</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+      <a href="https://drive.google.com/file/d/1rEjmG0QCQrCl7JcQ0-jf7Om7HO7hiRHk/view?usp=sharing" target="_blank"
+        rel="noopener noreferrer" class="mobile-nav-link highlight-link">
+        <i class="fa-solid fa-file-pdf"></i> View Resume
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Website Content Wrapper -->
+  <main class="main-wrapper">
+
+    <!-- ==============================================
+         1. HERO SECTION (NEO-BENTO GRID LIKE REFERENCE)
+         ============================================== -->
+    <section class="hero-section" id="hero">
+      <div class="hero-bento-grid">
+
+        <!-- Top Left Main Card (Lavender Card) -->
+        <div class="bento-card hero-main-card purple-bg">
+          <div class="hero-tag-wrap">
+            <span class="pill-badge outline-pill hero-pill-badge">
+              PORTFOLIO
+            </span>
+            <div class="sound-toggle-pill" id="soundToggleBtn" title="Toggle Lo-Fi Study Vibe">
+              <i class="fa-solid fa-music"></i>
+              <span class="sound-label">Lo-Fi Beat</span>
+              <span class="sound-wave">
+                <span></span><span></span><span></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="hero-title-wrap">
+            <h1 class="hero-display-title">
+              <span class="serif-italic">Creative.</span>
+              <span class="sans-bold">AI & Web Dev</span>
+            </h1>
+            <p class="hero-subtext">
+              Engineering intelligent, data-driven web applications and scalable digital solutions. Pursuing <strong>BS
+                in Data Science & Applications</strong> at <strong>IIT Madras</strong>.
+            </p>
+          </div>
+
+          <!-- Embedded Canary Yellow Subcard -->
+          <a href="#work" class="hero-subcard yellow-bg">
+            <div class="subcard-content">
+              <span class="subcard-label">AI / ML & FULL-STACK</span>
+              <span class="subcard-title">PYTHON & WEB ARCHITECT</span>
+            </div>
+            <div class="subcard-arrow">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Center Vertical Pill Card (Stacked 2026) -->
+        <div class="bento-card hero-year-pill white-bg">
+          <a href="#education" class="circle-arrow-btn" title="Explore Qualifications & IIT Madras">
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <div class="year-digits">
+            <span class="year-top">20</span>
+            <span class="year-bottom">26</span>
+          </div>
+          <div class="year-meta-badge">
+            <span class="iitm-badge">IIT MADRAS</span>
+            <span class="year-sub">DATA SCIENCE</span>
+          </div>
+        </div>
+
+        <!-- Top Right Portrait Card (Lilac + Photo Frame) -->
+        <div class="bento-card hero-photo-card purple-bg">
+          <div class="photo-frame-inner">
+            <div class="portrait-container" id="heroPortraitContainer">
+              <img src="assets/profile.png" alt="Arshmeen - AI & Web Developer at IIT Madras" id="heroProfileImg"
+                class="profile-img">
+            </div>
+          </div>
+
+          <div class="photo-card-footer">
+            <div class="photo-status">
+              <span class="dot-online"></span>
+              <span class="status-name">Arshmeen</span>
+            </div>
+            <a href="#about" class="circle-arrow-btn small" aria-label="Learn about Arshmeen">
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Bottom Left Pill Banner -->
+        <div class="bento-card hero-bottom-left-pill cream-pill-bg">
+          <div class="welcome-label-box">
+            <span class="label-top">WELCOME TO MY</span>
+            <span class="label-bottom">PORTFOLIO</span>
+          </div>
+          <a href="#work" class="long-arrow-pill">
+            <span class="arrow-pill-text">SEE MY WORK</span>
+            <span class="pill-divider-line"></span>
+            <span class="circle-arrow-btn micro"><i class="fa-solid fa-arrow-right"></i></span>
+          </a>
+        </div>
+
+        <!-- Bottom Right Long Pill Banner -->
+        <div class="bento-card hero-bottom-right-pill white-bg">
+          <div class="intro-marquee-line">
+            <span class="horizontal-line"></span>
+            <span class="author-name-tag">Arshmeen</span>
+            <span class="designation-chip">BS Data Science • IIT Madras</span>
+          </div>
+          <div class="quick-social-icons">
+            <a href="https://github.com/ArshmeenVerse" target="_blank" rel="noopener noreferrer" class="social-mini-btn"
+              title="GitHub: @ArshmeenVerse">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/arshmeenverse" target="_blank" rel="noopener noreferrer"
+              class="social-mini-btn" title="LinkedIn: /in/arshmeenverse">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="mailto:arshmeenverse@gmail.com" class="social-mini-btn" title="Email: arshmeenverse@gmail.com">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+            <a href="https://drive.google.com/file/d/1rEjmG0QCQrCl7JcQ0-jf7Om7HO7hiRHk/view?usp=sharing" target="_blank"
+              rel="noopener noreferrer" class="social-mini-btn" title="View Resume">
+              <i class="fa-solid fa-file-pdf"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==============================================
+         2. ABOUT & PERSONALITY SECTION
+         ============================================== -->
+    <section class="content-section" id="about">
+      <div class="section-header">
+        <div class="section-title-pill">
+          <i class="fa-solid fa-user-astronaut"></i>
+          <span>ABOUT ME</span>
+        </div>
+        <h2 class="section-main-heading">
+          Blending <span class="serif-italic">Data Science Logic</span> with <span class="serif-italic">Full-Stack
+            Craft</span>
+        </h2>
+        <p class="section-subheading">
+          Passionate about building intelligent AI/ML-driven applications, scalable Flask & Python backends, and
+          responsive user-centric web platforms.
+        </p>
+      </div>
+
+      <div class="about-bento-grid">
+        <!-- Bio Card -->
+        <div class="bento-card about-bio-card white-bg">
+          <div class="card-header-bar">
+            <span class="pill-badge purple-pill">The Story</span>
+            <span class="location-badge"><i class="fa-solid fa-graduation-cap"></i> IIT Madras</span>
+          </div>
+          <h3 class="bio-title">
+            Hi, I'm Arshmeen — pursuing my <span class="highlight-text yellow-highlight">BS in Data Science &
+              Applications at IIT Madras</span>.
+          </h3>
+          <p class="bio-text">
+            I specialize in the intersection of <strong>Machine Learning and Web Development</strong>. From architecting
+            end-to-end multi-role systems (like my Trekking Management platform with separate Admin, Staff, and Trekker
+            dashboards) to competing in high-intensity hackathons, I love turning complex problem statements into
+            elegant, robust web solutions.
+          </p>
+          <div class="quick-stats-row">
+            <div class="stat-box">
+              <span class="stat-number">Top 20</span>
+              <span class="stat-label">Mint Hackathon (1K+ devs)</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">IITM</span>
+              <span class="stat-label">BS Data Science</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">3-in-1</span>
+              <span class="stat-label">Role Architecture</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Tech Stack Bento Card -->
+        <div class="bento-card skills-bento-card purple-bg">
+          <div class="card-header-bar">
+            <span class="pill-badge yellow-pill">Tech Stack & Tools</span>
+            <span class="card-hint">Interactive</span>
+          </div>
+          <h4 class="skills-card-title">My Technical Arsenal</h4>
+
+          <div class="skills-tags-cluster">
+            <div class="tech-pill" data-tech="Python & Backend">
+              <i class="fa-brands fa-python"></i> Python
+            </div>
+            <div class="tech-pill" data-tech="Flask & Jinja2">
+              <i class="fa-solid fa-pepper-hot"></i> Flask & Jinja2
+            </div>
+            <div class="tech-pill" data-tech="SQLAlchemy & Databases">
+              <i class="fa-solid fa-database"></i> SQLAlchemy / SQL
+            </div>
+            <div class="tech-pill" data-tech="Bootstrap 5 & Tailwind">
+              <i class="fa-brands fa-bootstrap"></i> Bootstrap / Tailwind
+            </div>
+            <div class="tech-pill" data-tech="HTML5 & Modern CSS3">
+              <i class="fa-brands fa-html5"></i> HTML5 / CSS3
+            </div>
+            <div class="tech-pill" data-tech="JavaScript (ES6+)">
+              <i class="fa-brands fa-js"></i> JavaScript
+            </div>
+            <div class="tech-pill" data-tech="AI & Machine Learning">
+              <i class="fa-solid fa-brain"></i> AI & ML Systems
+            </div>
+            <div class="tech-pill" data-tech="Data Science & Analytics">
+              <i class="fa-solid fa-chart-line"></i> Data Science
+            </div>
+            <div class="tech-pill" data-tech="Git & Version Control">
+              <i class="fa-brands fa-git-alt"></i> Git / GitHub
+            </div>
+            <div class="tech-pill" data-tech="RESTful APIs Architecture">
+              <i class="fa-solid fa-network-wired"></i> RESTful APIs
+            </div>
+            <div class="tech-pill" data-tech="UI/UX & Prototyping">
+              <i class="fa-brands fa-figma"></i> Figma UI/UX
+            </div>
+          </div>
+
+          <div class="tech-detail-preview" id="techDetailPreview">
+            Hover over any skill to see mastery details.
+          </div>
+        </div>
+
+        <!-- Campus & Student Life Card -->
+        <div class="bento-card campus-bento-card yellow-bg">
+          <div class="pill-badge outline-pill">Campus & Fest Life</div>
+          <div class="campus-content">
+            <div class="campus-icon">
+              <i class="fa-solid fa-flag-checkered"></i>
+            </div>
+            <h4>IIT Madras Paradox & Clubs</h4>
+            <p>Active participant in <strong>IIT Madras Paradox Fest</strong>, dynamic student clubs, nationwide
+              hackathons, and collaborative open-source developer initiatives.</p>
+          </div>
+        </div>
+
+        <!-- Personality & Quirks Pill Card -->
+        <div class="bento-card quirks-bento-card white-bg">
+          <div class="card-header-bar">
+            <span class="pill-badge purple-pill">Beyond The Code</span>
+          </div>
+          <ul class="quirks-list">
+            <li>
+              <span class="quirk-icon">🏆</span>
+              <div class="quirk-desc"><strong>Competitive Spirit:</strong> Ranked in Top 20 out of 1,000+ candidates in
+                Mint Hackathon through rapid full-stack execution.</div>
+            </li>
+            <li>
+              <span class="quirk-icon">☕</span>
+              <div class="quirk-desc"><strong>Fueled by Chai & Lo-Fi:</strong> Deep work sessions solving algorithmic
+                challenges and building clean web systems.</div>
+            </li>
+            <li>
+              <span class="quirk-icon">🤖</span>
+              <div class="quirk-desc"><strong>AI + Web Synergy:</strong> Exploring practical generative AI models
+                integrated into real-world database-driven applications.</div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==============================================
+         3. WORK & PROJECTS SHOWCASE
+         ============================================== -->
+    <section class="content-section" id="work">
+      <div class="section-header">
+        <div class="section-title-pill">
+          <i class="fa-solid fa-shapes"></i>
+          <span>PORTFOLIO</span>
+        </div>
+        <h2 class="section-main-heading">
+          Featured <span class="serif-italic">Projects</span> & Builds
+        </h2>
+        <p class="section-subheading">
+          Explore full-stack Python & Flask applications, multi-role dashboard systems, and interactive tools.
+        </p>
+
+        <!-- Project Filter Buttons -->
+        <div class="filter-pills-bar">
+          <button class="filter-pill active" data-filter="all">All Projects</button>
+          <button class="filter-pill" data-filter="fullstack">Full-Stack & Flask</button>
+          <button class="filter-pill" data-filter="ai">AI & Data Science</button>
+          <button class="filter-pill" data-filter="tools">Web Apps</button>
+        </div>
+      </div>
+
+      <!-- Projects Bento Grid -->
+      <div class="projects-bento-grid" id="projectsGrid">
+
+        <!-- Project 1: Trekking Management Application (Featured Primary Project) -->
+        <div class="bento-card project-card white-bg" data-category="fullstack" style="grid-column: 1 / -1;">
+          <div class="project-card-visual project-visual-1"
+            style="height: 270px; background: linear-gradient(135deg, #FFE500 0%, #AB92F9 100%);">
+            <div class="project-mockup-badge">
+              <span class="tag-pill yellow-pill">Featured Project</span>
+              <span class="tag-pill white-pill">3 Role Dashboards</span>
+              <span class="tag-pill purple-pill">Python & Flask</span>
+            </div>
+            <div class="project-screen-art" style="width: 75%; height: 180px;">
+              <div class="screen-bar"><span></span><span></span><span></span> <span
+                  style="font-size: 10px; font-weight: 700; margin-left: 8px; color: #777;">Trekking Management System •
+                  Multi-Dashboard</span></div>
+              <div class="screen-body"
+                style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px;">
+                <div
+                  style="background: #FAF7BF; border: 1.5px solid #111; border-radius: 8px; padding: 8px; font-size: 11px; font-weight: 800;">
+                  👑 Admin Panel
+                  <div style="height: 6px; background: #FFE500; border-radius: 3px; margin-top: 6px;"></div>
+                  <div style="height: 6px; background: #111; border-radius: 3px; margin-top: 4px; width: 60%;"></div>
+                </div>
+                <div
+                  style="background: #EDE7FE; border: 1.5px solid #111; border-radius: 8px; padding: 8px; font-size: 11px; font-weight: 800;">
+                  🎒 Staff / Guide
+                  <div style="height: 6px; background: #AB92F9; border-radius: 3px; margin-top: 6px;"></div>
+                  <div style="height: 6px; background: #111; border-radius: 3px; margin-top: 4px; width: 80%;"></div>
+                </div>
+                <div
+                  style="background: #FFFFFF; border: 1.5px solid #111; border-radius: 8px; padding: 8px; font-size: 11px; font-weight: 800;">
+                  🥾 Trekker Portal
+                  <div style="height: 6px; background: #6EE7B7; border-radius: 3px; margin-top: 6px;"></div>
+                  <div style="height: 6px; background: #111; border-radius: 3px; margin-top: 4px; width: 50%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <div class="project-meta-row">
+              <span class="project-category">Full-Stack Python Application</span>
+              <span class="project-year">2026</span>
+            </div>
+            <h3 class="project-title" style="font-size: 1.8rem;">Trekking Management Application</h3>
+            <p class="project-summary">
+              A comprehensive full-stack trekking logistics and expedition platform designed with <strong>3 separate
+                role-based dashboards</strong>: an <strong>Admin Dashboard</strong> for overseeing trips, finances, and
+              guide assignments; a <strong>Staff Dashboard</strong> for guides to manage itinerary logs and gear checks;
+              and a <strong>Trekker Portal</strong> for participants to explore trails, book excursions, and track live
+              schedules.
+            </p>
+            <div class="project-tech-chips">
+              <span>Python</span>
+              <span>Flask</span>
+              <span>Jinja2</span>
+              <span>SQLAlchemy</span>
+              <span>Bootstrap 5</span>
+              <span>HTML5 / CSS3</span>
+              <span>SQLite / PostgreSQL</span>
+            </div>
+            <div class="project-actions">
+              <button class="bento-btn primary-btn view-project-btn" data-project-id="trekking">
+                <span>View Full Architecture & Highlights</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </button>
+              <a href="https://github.com/ArshmeenVerse" target="_blank" rel="noopener noreferrer" class="icon-link-btn"
+                title="GitHub: @ArshmeenVerse">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: AI & Data Science Analytics Platform -->
+        <div class="bento-card project-card purple-bg" data-category="ai">
+          <div class="project-card-visual project-visual-2">
+            <div class="project-mockup-badge">
+              <span class="tag-pill yellow-pill">Data Science</span>
+              <span class="tag-pill white-pill">ML Models</span>
+            </div>
+            <div class="project-screen-art">
+              <div class="screen-bar"><span></span><span></span><span></span></div>
+              <div class="screen-body bento-studio-preview">
+                <div class="mini-bento-1"></div>
+                <div class="mini-bento-2"></div>
+                <div class="mini-bento-3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <div class="project-meta-row">
+              <span class="project-category">AI / ML & Web</span>
+              <span class="project-year">2026</span>
+            </div>
+            <h3 class="project-title">AI Predictive Analytics Hub</h3>
+            <p class="project-summary">
+              Interactive web platform combining machine learning algorithms, dynamic statistical data visualizations,
+              and predictive modeling for user behavior and trend analysis.
+            </p>
+            <div class="project-tech-chips">
+              <span>Python</span>
+              <span>Pandas & NumPy</span>
+              <span>Scikit-Learn</span>
+              <span>Flask API</span>
+              <span>Chart.js</span>
+            </div>
+            <div class="project-actions">
+              <button class="bento-btn yellow-btn view-project-btn" data-project-id="aianalytics">
+                <span>Explore Project</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </button>
+              <a href="https://github.com/ArshmeenVerse" target="_blank" rel="noopener noreferrer" class="icon-link-btn"
+                title="GitHub Repository">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: Mint Hackathon Project -->
+        <div class="bento-card project-card yellow-bg" data-category="tools">
+          <div class="project-card-visual project-visual-3">
+            <div class="project-mockup-badge">
+              <span class="tag-pill purple-pill">Top 20 Finalist</span>
+              <span class="tag-pill white-pill">Completed 2026</span>
+            </div>
+            <div class="project-screen-art">
+              <div class="screen-bar"><span></span><span></span><span></span></div>
+              <div class="screen-body code-pulse-preview">
+                <div class="editor-pane">
+                  <div class="code-line-mock l1"></div>
+                  <div class="code-line-mock l2"></div>
+                  <div class="code-line-mock l3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <div class="project-meta-row">
+              <span class="project-category">Hackathon Build</span>
+              <span class="project-year">2026</span>
+            </div>
+            <h3 class="project-title">Mint Hackathon Prototype</h3>
+            <p class="project-summary">
+              High-intensity hackathon solution awarded in the top 20 nationwide out of 1,000+ competitors, recognized
+              for clean architecture, fast query processing, and responsive UI.
+            </p>
+            <div class="project-tech-chips">
+              <span>Python</span>
+              <span>Flask</span>
+              <span>SQLAlchemy</span>
+              <span>Bootstrap</span>
+              <span>REST APIs</span>
+            </div>
+            <div class="project-actions">
+              <button class="bento-btn primary-btn view-project-btn" data-project-id="minthackathon">
+                <span>View Highlights</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </button>
+              <a href="https://github.com/ArshmeenVerse" target="_blank" rel="noopener noreferrer" class="icon-link-btn"
+                title="GitHub Repository">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==============================================
+         4. EXPERIENCE & LEADERSHIP TIMELINE
+         ============================================== -->
+    <section class="content-section" id="experience">
+      <div class="section-header">
+        <div class="section-title-pill">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>EXPERIENCE & MILESTONES</span>
+        </div>
+        <h2 class="section-main-heading">
+          My <span class="serif-italic">Journey</span> & Track Record
+        </h2>
+        <p class="section-subheading">
+          Hackathon achievements, full-stack projects, and technical initiatives at IIT Madras.
+        </p>
+      </div>
+
+      <div class="experience-timeline-wrap">
+        <!-- Milestone 1: Mint Hackathon Top 20 -->
+        <div class="timeline-item bento-card white-bg">
+          <div class="timeline-meta-col">
+            <span class="timeline-period">2025-2026</span>
+            <span class="pill-badge purple-pill">National Finalist</span>
+          </div>
+          <div class="timeline-content-col">
+            <div class="role-header">
+              <h3 class="role-title">Top 20 Finalist — Mint Hackathon</h3>
+              <span class="role-org">Mint Hackathon • Among 1,000+ Student Developers</span>
+            </div>
+            <p class="role-desc">
+              Competed in the prestigious Mint Hackathon, designing and deploying an end-to-end full-stack software
+              prototype under strict time constraints. Successfully selected into the Top 20 ranking out of over 1,000
+              participants nationwide.
+            </p>
+            <ul class="role-bullets">
+              <li>Architected rapid-response database models and responsive user workflows.</li>
+              <li>Commended by evaluation panel for clean architecture, role-based authorization, and UI clarity.</li>
+            </ul>
+            <div class="role-tech-tags">
+              <span>Python</span>
+              <span>Flask</span>
+              <span>SQLAlchemy</span>
+              <span>Bootstrap</span>
+              <span>Git</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 2: Full-Stack Trekking Management Platform -->
+        <div class="timeline-item bento-card purple-bg">
+          <div class="timeline-meta-col">
+            <span class="timeline-period">2026</span>
+            <span class="pill-badge yellow-pill">Completed 2026</span>
+          </div>
+          <div class="timeline-content-col">
+            <div class="role-header">
+              <h3 class="role-title">Full-Stack Application Developer</h3>
+              <span class="role-org">Independent Builds & Open-Source (@ArshmeenVerse)</span>
+            </div>
+            <p class="role-desc">
+              Engineered the multi-role Trekking Management System featuring 3 separate dedicated dashboards for Admins,
+              Staff/Guides, and Trekkers.
+            </p>
+            <ul class="role-bullets">
+              <li>Implemented relational models and authentication with Flask and SQLAlchemy.</li>
+              <li>Crafted intuitive responsive interfaces using Jinja2 templates and Bootstrap 5.</li>
+            </ul>
+            <div class="role-tech-tags">
+              <span>Python</span>
+              <span>Flask</span>
+              <span>Jinja2</span>
+              <span>SQLAlchemy</span>
+              <span>Bootstrap 5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 3: IIT Madras Paradox Fest & Student Clubs -->
+        <div class="timeline-item bento-card yellow-bg">
+          <div class="timeline-meta-col">
+            <span class="timeline-period">2026 — PRESENT</span>
+            <span class="pill-badge white-pill">IIT Madras</span>
+          </div>
+          <div class="timeline-content-col">
+            <div class="role-header">
+              <h3 class="role-title">Technical Participant & Student Club Member</h3>
+              <span class="role-org">IIT Madras Paradox Fest & Campus Tech Communities</span>
+            </div>
+            <p class="role-desc">
+              Active participant in IIT Madras's premier Data Science festival (Paradox) and student technical
+              initiatives. Collaborating with fellow developers on computational challenges and modern web tools.
+            </p>
+            <ul class="role-bullets">
+              <li>Engaged in collaborative hackathons and peer code reviews for full-stack and data applications.</li>
+              <li>Participated in campus developer workshops focusing on Python, AI/ML, and web stacks.</li>
+            </ul>
+            <div class="role-tech-tags">
+              <span>Data Science</span>
+              <span>Python</span>
+              <span>Web Applications</span>
+              <span>Collaboration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==============================================
+         5. QUALIFICATIONS & EDUCATION SPOTLIGHT
+         ============================================== -->
+    <section class="content-section" id="education">
+      <div class="section-header">
+        <div class="section-title-pill">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>QUALIFICATIONS</span>
+        </div>
+        <h2 class="section-main-heading">
+          Academic <span class="serif-italic">Foundation</span> & Excellence
+        </h2>
+        <p class="section-subheading">
+          Enrolled at India's premier engineering institution: Indian Institute of Technology Madras.
+        </p>
+      </div>
+
+      <div class="education-bento-grid">
+        <!-- Main IIT Madras Degree Card -->
+        <div class="bento-card education-main-card white-bg">
+          <div class="edu-top-row">
+            <div class="edu-institute-seal">
+              <div class="seal-icon-circle">
+                <i class="fa-solid fa-building-columns"></i>
+              </div>
+              <div class="edu-names">
+                <h3 class="edu-degree">Bachelor of Science (BS)</h3>
+                <h4 class="edu-college">Data Science and Applications — IIT Madras</h4>
+              </div>
+            </div>
+            <div class="edu-badge-pill">
+              <span class="pill-badge yellow-pill">Expected 2026</span>
+            </div>
+          </div>
+
+          <p class="edu-description">
+            Pursuing the cutting-edge undergraduate degree in <strong>Data Science & Applications at IIT Madras</strong>
+            (NIRF #1 Ranked Engineering Institute in India). Developing deep expertise in machine learning, database
+            management, full-stack application development, and algorithmic optimization.
+          </p>
+
+          <div class="coursework-section">
+            <span class="coursework-title"><i class="fa-solid fa-book-open"></i> Key Coursework & Focus Areas:</span>
+            <div class="coursework-chips">
+              <span>Application Development with Python & Flask</span>
+              <span>Database Management Systems (DBMS) & SQL</span>
+              <span>Machine Learning & Data Mining</span>
+              <span>Data Structures & Algorithms (DSA)</span>
+              <span>Modern Web Technologies</span>
+              <span>Programming & Computational Thinking</span>
+              <span>Statistical Inference</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Honors & Certifications Card -->
+        <div class="bento-card honors-bento-card purple-bg">
+          <div class="card-header-bar">
+            <span class="pill-badge yellow-pill">Honors & Milestones</span>
+          </div>
+          <ul class="honors-list">
+            <li class="honor-item">
+              <div class="honor-icon"><i class="fa-solid fa-trophy"></i></div>
+              <div class="honor-text">
+                <strong>Mint Hackathon Top 20:</strong> Selected in the top 20 finalists out of 1,000+ participants
+                nationwide.
+              </div>
+            </li>
+            <li class="honor-item">
+              <div class="honor-icon"><i class="fa-solid fa-building-columns"></i></div>
+              <div class="honor-text">
+                <strong>IIT Madras Student:</strong> Enrolled in the rigorous BS in Data Science & Applications program.
+              </div>
+            </li>
+            <li class="honor-item">
+              <div class="honor-icon"><i class="fa-solid fa-laptop-code"></i></div>
+              <div class="honor-text">
+                <strong>Full-Stack Python Developer:</strong> Advanced proficiency in Flask, Jinja2, SQLAlchemy, and
+                responsive modern UI.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==============================================
+         6. CONTACT & SOCIAL HANDLES HUB
+         ============================================== -->
+    <section class="content-section" id="contact">
+      <div class="section-header">
+        <div class="section-title-pill">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>GET IN TOUCH</span>
+        </div>
+        <h2 class="section-main-heading">
+          Let's Build Something <span class="serif-italic">Remarkable</span>
+        </h2>
+        <p class="section-subheading">
+          Have an exciting project, full-stack opportunity, or want to collaborate? Feel free to reach out directly!
+        </p>
+      </div>
+
+      <div class="contact-bento-grid">
+
+        <!-- Left Column: Direct Action & Social Handles -->
+        <div class="contact-social-col">
+
+          <!-- Copy Email Quick Card -->
+          <div class="bento-card email-quick-card yellow-bg">
+            <div class="card-header-bar">
+              <span class="pill-badge white-pill"><i class="fa-solid fa-envelope"></i> Primary Email</span>
+              <span class="instant-reply-badge">Fast Response</span>
+            </div>
+            <div class="email-display-row">
+              <input type="text" class="email-text-field" value="arshmeenverse@gmail.com" id="emailToCopy" readonly>
+              <button class="bento-btn primary-btn copy-btn" id="copyEmailBtn" title="Copy Email to Clipboard">
+                <i class="fa-solid fa-copy"></i>
+                <span id="copyBtnText">Copy</span>
+              </button>
+            </div>
+            <p class="email-note">Send me a direct email anytime at <strong>arshmeenverse@gmail.com</strong></p>
+          </div>
+
+          <!-- Social Handles Bento Pills -->
+          <div class="bento-card social-links-card white-bg">
+            <h3 class="social-box-title">Connect & Profiles</h3>
+            <div class="social-pills-list">
+
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/in/arshmeenverse" target="_blank" rel="noopener noreferrer"
+                class="social-pill-link linkedin-pill">
+                <div class="social-pill-left">
+                  <span class="social-icon-box"><i class="fa-brands fa-linkedin-in"></i></span>
+                  <div class="social-pill-text">
+                    <span class="social-name">LinkedIn</span>
+                    <span class="social-handle">linkedin.com/in/arshmeenverse</span>
+                  </div>
+                </div>
+                <span class="social-pill-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+              </a>
+
+              <!-- GitHub -->
+              <a href="https://github.com/ArshmeenVerse" target="_blank" rel="noopener noreferrer"
+                class="social-pill-link github-pill">
+                <div class="social-pill-left">
+                  <span class="social-icon-box"><i class="fa-brands fa-github"></i></span>
+                  <div class="social-pill-text">
+                    <span class="social-name">GitHub</span>
+                    <span class="social-handle">@ArshmeenVerse</span>
+                  </div>
+                </div>
+                <span class="social-pill-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+              </a>
+
+              <!-- Resume Download Pill -->
+              <a href="https://drive.google.com/file/d/1rEjmG0QCQrCl7JcQ0-jf7Om7HO7hiRHk/view?usp=sharing"
+                target="_blank" rel="noopener noreferrer" class="social-pill-link resume-pill"
+                style="background-color: var(--color-yellow-light);">
+                <div class="social-pill-left">
+                  <span class="social-icon-box"><i class="fa-solid fa-file-pdf"></i></span>
+                  <div class="social-pill-text">
+                    <span class="social-name">View Resume (Google Drive)</span>
+                    <span class="social-handle">Official PDF Resume</span>
+                  </div>
+                </div>
+                <span class="social-pill-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+              </a>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Interactive Contact Form -->
+        <div class="bento-card contact-form-card purple-bg">
+          <div class="card-header-bar">
+            <span class="pill-badge yellow-pill"><i class="fa-solid fa-comment-dots"></i> Send a Message</span>
+            <span class="form-hint">Direct to Inbox</span>
+          </div>
+          <h3 class="form-title">Have an opportunity or idea?</h3>
+          <p class="form-subtext">Fill out this quick form and I will get back to you promptly at
+            arshmeenverse@gmail.com.</p>
+
+          <form id="contactForm" class="bento-styled-form" novalidate>
+            <div class="form-group">
+              <label for="userName" class="form-label">Your Name <span class="required">*</span></label>
+              <input type="text" id="userName" name="name" class="bento-input" placeholder="e.g. Alex Sharma" required>
+              <span class="error-msg" id="nameError">Please enter your name</span>
+            </div>
+
+            <div class="form-group">
+              <label for="userEmail" class="form-label">Your Email <span class="required">*</span></label>
+              <input type="email" id="userEmail" name="email" class="bento-input" placeholder="e.g. alex@example.com"
+                required>
+              <span class="error-msg" id="emailError">Please enter a valid email</span>
+            </div>
+
+            <div class="form-group">
+              <label for="userSubject" class="form-label">Subject</label>
+              <input type="text" id="userSubject" name="subject" class="bento-input"
+                placeholder="Collaboration, internship, or project inquiry">
+            </div>
+
+            <div class="form-group">
+              <label for="userMessage" class="form-label">Message <span class="required">*</span></label>
+              <textarea id="userMessage" name="message" class="bento-textarea" rows="4"
+                placeholder="Tell me a bit about what you'd like to work on..." required></textarea>
+              <span class="error-msg" id="messageError">Please enter your message</span>
+            </div>
+
+            <button type="submit" class="bento-btn yellow-btn submit-btn" id="submitFormBtn">
+              <span>Send Message</span>
+              <span class="btn-arrow-circle"><i class="fa-solid fa-paper-plane"></i></span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==============================================
+       FOOTER
+       ============================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top-row">
+        <div class="footer-brand">
+          <div class="nav-brand-pill footer-pill">
+            <span class="starburst-icon">✦</span>
+            <span class="brand-name">ARSHMEEN</span>
+          </div>
+          <p class="footer-tagline">
+            AI & Full-Stack Web Developer • BS in Data Science & Applications, IIT Madras
+          </p>
+        </div>
+
+        <div class="footer-nav-links">
+          <a href="#hero">Back to Top ↑</a>
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div class="copyright-text">
+          © 2026 Arshmeen. Built with modern aesthetics & pixel precision.
+        </div>
+        <div class="footer-credits">
+          <span>Crafted for Web & AI Excellence • IIT Madras</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
