@@ -1486,7 +1486,8 @@ body.cursor-hover .custom-cursor-follower {
 .project-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .icon-link-btn {

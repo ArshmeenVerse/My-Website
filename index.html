@@ -523,58 +523,85 @@
               <span>SQLite / PostgreSQL</span>
             </div>
             <div class="project-actions">
-              <button class="bento-btn primary-btn view-project-btn" data-project-id="trekking">
-                <span>View Full Architecture & Highlights</span>
+              <a href="https://trek.arshmeen.codes/" target="_blank" rel="noopener noreferrer" class="bento-btn primary-btn" title="Live Demo">
+                <span>Live Demo</span>
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <button class="bento-btn outline-btn view-project-btn" data-project-id="trekking">
+                <span>Architecture</span>
+                <i class="fa-solid fa-circle-info"></i>
               </button>
-              <a href="https://github.com/ArshmeenVerse" target="_blank" rel="noopener noreferrer" class="icon-link-btn"
-                title="GitHub: @ArshmeenVerse">
+              <a href="https://github.com/ArshmeenVerse/trekking-management-application" target="_blank" rel="noopener noreferrer" class="icon-link-btn"
+                title="GitHub: trekking-management-application">
                 <i class="fa-brands fa-github"></i>
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Project 2: AI & Data Science Analytics Platform -->
+        <!-- Project 2: Smart Face Recognition & Attendance System -->
         <div class="bento-card project-card purple-bg" data-category="ai">
-          <div class="project-card-visual project-visual-2">
+          <div class="project-card-visual project-visual-2" style="background: linear-gradient(135deg, #C4B2FC 0%, #EDE7FE 100%);">
             <div class="project-mockup-badge">
-              <span class="tag-pill yellow-pill">Data Science</span>
-              <span class="tag-pill white-pill">ML Models</span>
+              <span class="tag-pill yellow-pill"><i class="fa-solid fa-camera"></i> InsightFace AI</span>
+              <span class="tag-pill white-pill">512D ArcFace</span>
+              <span class="tag-pill purple-pill">OpenCV</span>
             </div>
             <div class="project-screen-art">
-              <div class="screen-bar"><span></span><span></span><span></span></div>
-              <div class="screen-body bento-studio-preview">
-                <div class="mini-bento-1"></div>
-                <div class="mini-bento-2"></div>
-                <div class="mini-bento-3"></div>
+              <div class="screen-bar">
+                <span></span><span></span><span></span>
+                <span style="font-size: 10px; font-weight: 700; margin-left: 8px; color: #777;">Live Biometric Recognition HUD</span>
+              </div>
+              <div class="screen-body" style="padding: 10px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; background: #18181b; color: #fff; font-family: monospace; border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px;">
+                  <span style="color: #4ade80; display: flex; align-items: center; gap: 4px;"><span style="width: 6px; height: 6px; background: #4ade80; border-radius: 50%; display: inline-block;"></span> LIVE STREAM • 10 FPS</span>
+                  <span style="background: #27272a; padding: 2px 6px; border-radius: 4px; color: #a1a1aa; font-size: 9px;">512D Cosine Match</span>
+                </div>
+                <div style="border: 1.5px dashed #4ade80; border-radius: 6px; padding: 6px 8px; margin: 4px 0; background: rgba(74, 222, 128, 0.08); display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-size: 11px; font-weight: 700; color: #fff;">Arshmeen (Verified)</div>
+                    <div style="font-size: 9px; color: #a1a1aa;">Similarity: 0.892 &bull; Match &ge; 0.50</div>
+                  </div>
+                  <span style="background: #15803d; color: #dcfce7; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;">PRESENT</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 9px; color: #71717a;">
+                  <span>InsightFace buffalo_l</span>
+                  <span>ArcFace ONNX</span>
+                </div>
               </div>
             </div>
           </div>
           <div class="project-card-info">
             <div class="project-meta-row">
-              <span class="project-category">AI / ML & Web</span>
+              <span class="project-category">Computer Vision & Deep Learning</span>
               <span class="project-year">2026</span>
             </div>
-            <h3 class="project-title">AI Predictive Analytics Hub</h3>
+            <h3 class="project-title">Smart Face Recognition & Attendance System</h3>
             <p class="project-summary">
-              Interactive web platform combining machine learning algorithms, dynamic statistical data visualizations,
-              and predictive modeling for user behavior and trend analysis.
+              An automated attendance management platform powered by <strong>Flask, OpenCV, and InsightFace</strong>.
+              Detects and recognizes registered individuals in real time from live webcam feeds using <strong>512D ArcFace embeddings</strong>, logs daily attendance automatically, and handles late arrivals.
             </p>
             <div class="project-tech-chips">
               <span>Python</span>
-              <span>Pandas & NumPy</span>
-              <span>Scikit-Learn</span>
-              <span>Flask API</span>
-              <span>Chart.js</span>
+              <span>Flask</span>
+              <span>OpenCV</span>
+              <span>InsightFace</span>
+              <span>ArcFace (512D)</span>
+              <span>ONNX Runtime</span>
+              <span>SQLAlchemy</span>
+              <span>Bootstrap 5</span>
             </div>
             <div class="project-actions">
-              <button class="bento-btn yellow-btn view-project-btn" data-project-id="aianalytics">
-                <span>Explore Project</span>
+              <a href="http://ai-attendance-system.arshmeen.codes/" target="_blank" rel="noopener noreferrer" class="bento-btn primary-btn" title="Live Demo">
+                <span>Live Demo</span>
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <button class="bento-btn outline-btn view-project-btn" data-project-id="smartface">
+                <span>Architecture</span>
+                <i class="fa-solid fa-circle-info"></i>
               </button>
-              <a href="https://github.com/ArshmeenVerse" target="_blank" rel="noopener noreferrer" class="icon-link-btn"
-                title="GitHub Repository">
+              <a href="https://github.com/ArshmeenVerse/smart_AI_attendance_system" target="_blank" rel="noopener noreferrer" class="icon-link-btn"
+                title="GitHub: smart_AI_attendance_system">
                 <i class="fa-brands fa-github"></i>
               </a>
             </div>

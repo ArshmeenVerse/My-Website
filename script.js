@@ -190,27 +190,39 @@ const PROJECT_DATABASE = {
       '👑 Admin Dashboard: Centralized portal to schedule expeditions, assign mountain guides, manage participant manifests, and view booking analytics.',
       '🎒 Staff / Guide Dashboard: Allows tour leaders to view upcoming assigned treks, update live daily itinerary statuses, and log equipment inventories.',
       '🥾 Trekker Portal: Seamless user experience for explorers to search scenic trails, book trips, download packing checklists, and view schedule updates.',
-      'Data Integrity: Built using SQLAlchemy ORM with relational schema handling users, treks, bookings, and payments.',
-      'Clean UI: Styled with Bootstrap 5 and customized modern responsive CSS for flawless mobile and desktop experience.'
+      '💾 Data Integrity: Built using SQLAlchemy ORM with relational schema handling users, treks, bookings, and payments.',
+      '🎨 Clean UI: Styled with Bootstrap 5 and customized modern responsive CSS for flawless mobile and desktop experience.'
     ],
     tech: ['Python', 'Flask', 'Jinja2', 'SQLAlchemy', 'Bootstrap 5', 'HTML5', 'CSS3', 'SQLite / PostgreSQL'],
-    liveUrl: '#',
-    githubUrl: 'https://github.com/ArshmeenVerse'
+    liveUrl: 'https://trek.arshmeen.codes/',
+    githubUrl: 'https://github.com/ArshmeenVerse/trekking-management-application'
   },
-  aianalytics: {
-    title: 'AI Predictive Analytics Hub',
-    tag: 'Machine Learning & Web App',
+  smartface: {
+    title: 'Smart Face Recognition & Attendance System',
+    tag: 'Computer Vision & Deep Learning Biometrics',
     year: '2026',
-    client: 'Data Science Innovation',
-    desc: 'An intelligent analytical web application that bridges machine learning predictive models with interactive data visualization dashboards for real-time trend forecasting.',
+    client: 'Biometric Attendance & Administrative Platform',
+    desc: 'A lightweight, automated attendance management platform powered by Flask, OpenCV, and InsightFace deep learning facial recognition. Designed to replace manual roll calls and badge scanning with biometric identification, it captures live webcam feeds, extracts 512D ArcFace facial embeddings, computes real-time cosine similarity matching, and manages complete daily attendance lifecycles with dynamic late-arrival transitions.',
     highlights: [
-      'Engineered data processing pipelines using Pandas, NumPy, and Scikit-Learn',
-      'REST API backend built in Python to serve instant ML inference queries',
-      'Dynamic charts and statistical distribution views for actionable insights'
+      '👁️ InsightFace & ArcFace Pipeline: Utilizes InsightFace buffalo_l model pack with ArcFace deep CNN to extract 512-dimensional normalized facial feature vectors.',
+      '📐 L2 Normalization & Cosine Matching: Normalizes raw vectors to unit length and executes fast dot-product cosine similarity comparison against enrolled database embeddings (0.50 default threshold).',
+      '🎥 Decoupled Dual-Thread Video Streaming: Dual-thread architecture where the OpenCV display loop renders smooth hardware frame rates while an asynchronous background worker processes inference at a configurable rate (RECOGNITION_FPS).',
+      '⚡ Dynamic Daily Attendance Lifecycle: Automatically marks "Present" on first recognition, supports end-of-day "Absent" batch finalization, and seamlessly converts "Absent" to "Present" when late-arriving individuals appear.',
+      '🛡️ Biometric Enrollment & Admin Portal: Full administrative web portal featuring PBKDF2 SHA-256 password hashing, interactive webcam single-face enrollment verification, complete Person CRUD, and attendance audit filtering.',
+      '💾 In-Memory Caching & Database Integrity: In-memory attendance caching prevents redundant database write queries on continuous video frames; unique database constraint on (person_id, date) guarantees zero duplicates.'
     ],
-    tech: ['Python', 'Scikit-Learn', 'Pandas', 'Flask API', 'Chart.js', 'Bootstrap'],
-    liveUrl: '#',
-    githubUrl: 'https://github.com/ArshmeenVerse'
+    pipeline: [
+      'Webcam Frame Capture (OpenCV)',
+      'InsightFace Detection (RetinaFace)',
+      'Facial Landmark Alignment',
+      '512D ArcFace Feature Extraction',
+      'L2 Vector Normalization (v = v / ||v||)',
+      'Cosine Similarity Comparison (score = dot(v_live, v_enrolled))',
+      'Threshold Verification (score ≥ 0.50 ➔ Identified & Logged / Late Transitioned)'
+    ],
+    tech: ['Python 3.9+', 'Flask 3.1', 'OpenCV (opencv-python)', 'InsightFace', 'ArcFace (512D)', 'ONNX Runtime', 'SQLAlchemy', 'SQLite', 'Bootstrap 5', 'Jinja2'],
+    liveUrl: 'http://ai-attendance-system.arshmeen.codes/',
+    githubUrl: 'https://github.com/ArshmeenVerse/smart_AI_attendance_system'
   },
   minthackathon: {
     title: 'Mint Hackathon Finalist Prototype',
@@ -228,6 +240,7 @@ const PROJECT_DATABASE = {
     githubUrl: 'https://github.com/ArshmeenVerse'
   }
 };
+PROJECT_DATABASE.aianalytics = PROJECT_DATABASE.smartface;
 
 function initProjectFiltersAndModal() {
   const filterPills = document.querySelectorAll('.filter-pill');
@@ -280,14 +293,33 @@ function initProjectFiltersAndModal() {
           ${data.highlights.map(h => `<li>${h}</li>`).join('')}
         </ul>
 
+        ${data.pipeline ? `
+          <h4 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 10px;">Face Recognition Pipeline:</h4>
+          <div style="background: #FAFAFA; border: 1.5px solid #111; border-radius: 8px; padding: 14px; margin-bottom: 24px; font-family: monospace; font-size: 0.82rem; display: flex; flex-direction: column; gap: 4px;">
+            ${data.pipeline.map((step, idx) => `
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="background: #111; color: #FFE500; font-weight: 800; border-radius: 4px; padding: 2px 6px; font-size: 0.72rem;">Step ${idx + 1}</span>
+                <span style="color: #222; font-weight: 600;">${step}</span>
+              </div>
+              ${idx < data.pipeline.length - 1 ? '<div style="margin-left: 18px; color: #999; font-size: 0.7rem; line-height: 1;">↓</div>' : ''}
+            `).join('')}
+          </div>
+        ` : ''}
+
         <h4 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 10px;">Technologies Used:</h4>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;">
           ${data.tech.map(t => `<span class="pill-badge outline-pill" style="font-size: 0.75rem;">${t}</span>`).join('')}
         </div>
 
         <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          ${data.liveUrl && data.liveUrl !== '#' ? `
+            <a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="bento-btn yellow-btn">
+              <span>Live Application Demo</span>
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          ` : ''}
           <a href="${data.githubUrl}" target="_blank" rel="noopener noreferrer" class="bento-btn primary-btn">
-            <i class="fa-brands fa-github"></i> Visit GitHub Profile (@ArshmeenVerse)
+            <i class="fa-brands fa-github"></i> ${data.githubUrl !== 'https://github.com/ArshmeenVerse' ? 'GitHub Repository' : 'Visit GitHub Profile (@ArshmeenVerse)'}
           </a>
           <button class="bento-btn outline-btn" onclick="document.getElementById('projectModal').classList.remove('active')">
             Close Preview
@@ -322,7 +354,7 @@ const SKILL_DETAILS = {
   'Bootstrap 5 & Tailwind': 'Responsive grid systems, modern cards, navbars, modals, mobile-first utility classes.',
   'HTML5 & Modern CSS3': 'Semantic markup, custom variables, fluid typography, Flexbox, CSS Grid, micro-animations.',
   'JavaScript (ES6+)': 'DOM manipulation, async/await, API fetching, event handling, interactive UI widgets.',
-  'AI & Machine Learning': 'Model evaluation, classification, regression, Scikit-Learn pipelines, feature engineering.',
+  'AI & Machine Learning': 'Computer Vision (OpenCV, InsightFace), ArcFace 512D deep embeddings, Scikit-Learn pipelines, ML inference & evaluation.',
   'Data Science & Analytics': 'Exploratory Data Analysis (EDA), Pandas, NumPy, statistical testing, Matplotlib/Seaborn.',
   'Git & Version Control': 'Branching, commit conventions, collaborative pull requests, GitHub workflow (@ArshmeenVerse).',
   'RESTful APIs Architecture': 'HTTP methods, JSON serialization, token authentication, endpoint error handling.',
